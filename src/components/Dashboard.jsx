@@ -1,14 +1,10 @@
 import React from "react";
-import Navbar from "./Navbar";
 
-const Dashboard = ({ sidebarToggle, setSidebarToggle }) => {
+const Dashboard = () => {
   return (
-    <div className={`${sidebarToggle ? " " : "ml-64"} w-full`}>
-      <Navbar
-        setSidebarToggle={setSidebarToggle}
-        sidebarToggle={sidebarToggle}
-      />
-      {/* Add your dashboard content here */}
+    <div className="bg-white shadow rounded-lg p-6">
+      <h2 className="text-2xl font-bold mb-4">Dashboard Content</h2>
+      <p>Your dashboard content goes here.</p>
     </div>
   );
 };

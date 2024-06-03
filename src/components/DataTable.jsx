@@ -1,24 +1,34 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const DataTable = () => {
+const DataTable = ({ searchTerm }) => {
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     axios
       .get("https://jsonplaceholder.typicode.com/posts")
       .then((response) => {
         setData(response.data);
+        setFilteredData(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
   }, []);
 
+  useEffect(() => {
+    setFilteredData(
+      data.filter((item) =>
+        item.title.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, data]);
+
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Data Table</h2>
-      <table className="min-w-full bg-white border">
+    <div className="bg-white p-6 mt-6 rounded-lg shadow-lg">
+      <h2 className="text-3xl font-bold mb-4">Data Table</h2>
+      <table className="min-w-full bg-white border border-gray-200">
         <thead>
           <tr>
             <th className="px-4 py-2 border">ID</th>
@@ -27,7 +37,7 @@ const DataTable = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
+          {filteredData.map((item) => (
             <tr key={item.id}>
               <td className="px-4 py-2 border">{item.id}</td>
               <td className="px-4 py-2 border">{item.title}</td>

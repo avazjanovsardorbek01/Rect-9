@@ -1,46 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaBell, FaSearch, FaUserCircle, FaBars } from "react-icons/fa";
 
-const Navbar = ({ sidebarToggle, setSidebarToggle }) => {
+const Navbar = ({ sidebarToggle, setSidebarToggle, onSearch }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    onSearch(e.target.value);
+  };
+
   return (
-    <nav className="bg-gray-800 px-4 py-3 flex justify-between w-full">
+    <nav className="bg-gray-800 px-4 py-3 flex justify-between items-center">
       <div className="flex items-center text-xl">
         <FaBars
-          className="text-white me-4 cursor-pointer"
+          className="text-white mr-4 cursor-pointer"
           onClick={() => setSidebarToggle(!sidebarToggle)}
         />
         <span className="text-white font-semibold">E-commerce</span>
       </div>
-      <div className="flex items-center gap-x-5">
-        <div className="relative md:w-65">
-          <span className="relative md:absolute inset-y-0 left-0 flex items-center pl-2">
-            <button className="p-1 focus:outline-none text-white md:text-black">
-              <FaSearch />
-            </button>
+      <div className="flex items-center gap-5">
+        <div className="relative md:w-64">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+            <FaSearch className="text-gray-400" />
           </span>
           <input
             type="text"
-            className="w-full px-4 py-1 pl-12 rounded shadow outline-none hidden md:block"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className="w-full pl-10 pr-4 py-2 bg-gray-700 text-white rounded-full focus:outline-none"
+            placeholder="Search..."
           />
         </div>
-
-        <div className="text-white">
-          <FaBell className="w-6 h-6" />
-        </div>
-
+        <FaBell className="text-white w-6 h-6" />
         <div className="relative">
-          <button className="text-white group">
-            <FaUserCircle className="w-6 h-5 mt-1" />
-            <div className="z-10 hidden absolute bg-white rounded-lg shadow w-32 group-focus:block top-full right-0">
-              <ul className="py-2 text-sm text-gray-950">
+          <button className="text-white focus:outline-none">
+            <FaUserCircle className="w-6 h-6" />
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden group-hover:block">
+              <ul className="py-1">
                 <li>
-                  <a href="">Profile</a>
+                  <a href="#" className="block px-4 py-2 text-gray-800">
+                    Profile
+                  </a>
                 </li>
                 <li>
-                  <a href="">Setting</a>
+                  <a href="#" className="block px-4 py-2 text-gray-800">
+                    Settings
+                  </a>
                 </li>
                 <li>
-                  <a href="">Log Out</a>
+                  <a href="#" className="block px-4 py-2 text-gray-800">
+                    Log out
+                  </a>
                 </li>
               </ul>
             </div>
